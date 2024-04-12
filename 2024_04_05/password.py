@@ -24,6 +24,10 @@ def codifica_Cesare():
             cnt = 0
         parallel.append(pw[cnt])
         cnt += 1
+        """ if(len(mex)>len(pw):
+                for i in range(len(mex)-len(pw)):
+                    password+=password[i]
+                     copia la password per la lunghezza del mex """
 
     codemex = ""
     for i in range(len(mex)):
