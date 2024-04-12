@@ -69,12 +69,15 @@ def decodifica_Cesare():
 
 def main():
     global mode
-    try:
-        mode = funzioni.input_gen("Vuoi cifrare o decifrare? Inserisci C o D: ", str)
-        if mode != "C" and mode != "D":
-            raise Exception("Input non valido")
-    except Exception as error:
-        print(error)
+    while True:
+        try:
+            mode = funzioni.input_gen("Vuoi cifrare o decifrare? Inserisci C o D: ", str)
+            if mode != "C" and mode != "D":
+                raise Exception("Input non valido")
+            else:
+                break
+        except Exception as error:
+            print(error)
 
     if mode == 'C':
         mex = codifica_Cesare()
