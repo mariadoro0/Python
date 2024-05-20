@@ -1,0 +1,5 @@
+Mario;8.5;P
+Andrea;7.3;P
+Roberto;3.0;R
+Gaia;9.0;P
+Luca;4.5;R
