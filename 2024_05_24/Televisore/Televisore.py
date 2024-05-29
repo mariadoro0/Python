@@ -23,38 +23,36 @@ class Televisore:
     def setVolume(self, volume):
         self.__volume = volume
 
-    def setCanale(self, canale):
-        self.__canale = canale
-
     def setSilzioso(self, silzioso):
         self.__silenzioso = silzioso
 
     def __str__(self):
         return "----STATO TV-------" + "\nAcceso: " + str(self.__acceso) + "\nVolume: " + str(
-            self.__volume) + "\nCanale: " + str(self.__canale) + "\nSilenzioso: " + str(self.__silenzioso)+"\n---------------"
+            self.__volume) + "\nCanale: " + str(self.__canale) + "\nSilenzioso: " + str(
+            self.__silenzioso) + "\n---------------"
 
     def Pulsante_Accensione(self):
         if self.__acceso:
-            return False
+            self.__acceso = False
+            return "spenta"
         else:
-            return True
+            self.__acceso = True
+            return "accesa"
 
-
-    def Imposta_Canale(self, canale):
-            self.__canale = canale
-
+    def Imposta_Canale(self, canale:int):
+        self.__canale = canale
 
     def Canale_Successivo(self):
         if self.__canale == 99:
-            return 0
+            self.__canale = 0
         else:
-            return self.__canale+1
+            self.__canale +=1
 
     def Canale_Precedente(self):
         if self.__canale == 0:
-            return 99
+            self.__canale = 99
         else:
-            return self.__canale-1
+            self.__canale -=1
 
     def Aumenta_Volume(self):
         if self.__volume == 10:
@@ -66,13 +64,16 @@ class Televisore:
         if self.__volume == 0:
             return -1
         else:
-            return self.__volume -1
+            return self.__volume - 1
 
     def Pulsante_Silenzioso(self):
         if self.__silenzioso:
-            return False
+            self.__silenzioso = False
         else:
-            return True
+            self.__silenzioso = True
 
     def Print_Tv(self):
-        print(self)
+        if self.__acceso:
+            return self
+        else:
+            return "La tv è spenta"
