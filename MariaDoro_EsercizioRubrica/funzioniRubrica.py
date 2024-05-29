@@ -78,6 +78,11 @@ def scelta_record(rubrica):
     return rmod
 
 
+def scelta_tel():
+    tmod = input_range("Quale numero di telefono si intende modificare? 1 o 2. ", int, 1, 2)
+    return tmod
+
+
 def elimina_numero(rubrica, rmod, tmod):
     if tmod == 1:
         rubrica[rmod].update({'Telefono 1': ""})
@@ -94,8 +99,17 @@ def apri_file(file, mod, enc):
     return f
 
 
-
 def scrittura_file(f, rubrica):
     for r in rubrica:
         f.write(f"{r['Nominativo']};{r['Telefono 1']};{r['Telefono 2']};{r['Indirizzo']};{r['Città']};{r['Società']}")
         f.write("\n")
+
+
+def lettura_file(f, rubrica):
+    for line in f:
+        nome, tel1, tel2, indirizzo, citta, societa = line.strip().split(';')
+        diz = {"Nominativo": nome, "Telefono 1": tel1, "Telefono 2": tel2, "Indirizzo": indirizzo,
+               "Città": citta,
+               "Società": societa}
+        rubrica.append(diz)
+    return rubrica
