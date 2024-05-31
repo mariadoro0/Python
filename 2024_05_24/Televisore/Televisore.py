@@ -27,9 +27,18 @@ class Televisore:
         self.__silenzioso = silzioso
 
     def __str__(self):
-        return "----STATO TV-------" + "\nAcceso: " + str(self.__acceso) + "\nVolume: " + str(
-            self.__volume) + "\nCanale: " + str(self.__canale) + "\nSilenzioso: " + str(
-            self.__silenzioso) + "\n---------------"
+        return "----STATO TV-------" + "\nAcceso: " + self.SioNo(self.__acceso) + "\nVolume: " + str(
+            self.__volume) + "\nCanale: " + str(self.__canale) + "\nSilenzioso: " + self.SioNo(self.__silenzioso) + "\n---------------"
+
+
+    def SioNo(self,parametro):
+        if parametro:
+            return "SI"
+        else:
+            return "NO"
+
+
+
 
     def Pulsante_Accensione(self):
         if self.__acceso:
@@ -56,21 +65,27 @@ class Televisore:
 
     def Aumenta_Volume(self):
         if self.__volume == 10:
-            return -1
+            msg = "Il volume è già al massimo. Resta a 10."
+            return msg, self.__volume
         else:
-            return self.__volume + 1
+            msg = "Volume alzato."
+            return msg, self.__volume + 1
 
     def Abbassa_Volume(self):
         if self.__volume == 0:
-            return -1
+            msg = "Il volume è già al minimo. Resta a 0."
+            return msg, self.__volume
         else:
-            return self.__volume - 1
+            msg = "Volume abbassato."
+            return msg, self.__volume - 1
 
     def Pulsante_Silenzioso(self):
         if self.__silenzioso:
             self.__silenzioso = False
+            return "disattivato"
         else:
             self.__silenzioso = True
+            return "attivato"
 
     def Print_Tv(self):
         if self.__acceso:

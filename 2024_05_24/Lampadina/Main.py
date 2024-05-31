@@ -4,7 +4,7 @@ from Televisore.inputDati import input_range, input_gen
 
 def menu():
     while True:
-        print("********MENU TV***********")
+        print("********MENU LAMPADINA***********")
         print("** 1. Accendi/Spegni")
         print("** 2. Stampa stato della lampadina.")
         print("** 3. Crea nuova lampadina. ")
@@ -15,18 +15,22 @@ def menu():
     return scelta
 
 
-
 def main():
-    lamp = Lampadina()
-    lamp.setClickMax(input_gen("Inserire il valore massimo di click: ", int))
+    clickmax = input_gen("Inserire il valore massimo di click: ", int)
+    lamp = Lampadina(clickmax)
+
 
     while True:
-        scelta=menu()
+        scelta = menu()
         match scelta:
             case 1:
-                lamp.setStato(lamp.controllaClick())
+                lamp.controllaClick()
                 if lamp.getStato():
-                    lamp.setAccesa(lamp.click())
+                    lamp.click()
+                    if lamp.getAccesa():
+                        print("La lampadina è accesa.")
+                    else:
+                        print("La lampadina è spenta.")
                 else:
                     print("La lampadina è rotta. Creane una nuova per continuare.")
 
@@ -35,17 +39,11 @@ def main():
                 input("Premi invio per continuare...")
 
             case 3:
-                lamp = Lampadina()
-                lamp.setClickMax(input_gen("Inserire il valore massimo di click: ", int))
+                clickmax = input_gen("Inserire il valore massimo di click: ", int)
+                lamp = Lampadina(clickmax)
 
             case 0:
                 break
-
-
-
-
-
-
 
 
 main()

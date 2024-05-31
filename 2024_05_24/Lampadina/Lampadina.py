@@ -1,9 +1,9 @@
 class Lampadina:
-    def __init__(self):
+    def __init__(self, clickmax):
         self.__accesa = False
         self.__stato = True
         self.__contaclick = 0
-        self.__clickmax = 0
+        self.__clickmax = clickmax
 
     def getAccesa(self):
         return self.__accesa
@@ -17,33 +17,29 @@ class Lampadina:
     def getClickMax(self):
         return self.__clickmax
 
-    def setAccesa(self, accesa):
-        self.__accesa = accesa
 
-    def setStato(self, stato):
-        self.__stato = stato
-
-    def setContaClick(self, click):
-        self.__contaclick = click
-
-    def setClickMax(self, clickmax):
-        self.__clickmax = clickmax
 
     def __str__(self):
         return "-----LAMPADINA-----\nAccesa: {0}\nFunzionante: {1}\nClick effettuati: {2}\nMax click: {3}\n------------".format(
-            str(self.__accesa), str(self.__stato), str(self.__contaclick), str(self.__clickmax))
+            self.SioNo(self.__accesa), self.SioNo(self.__stato), str(self.__contaclick), str(self.__clickmax))
+
+    def SioNo(self, parametro):
+        if parametro:
+            return "SI"
+        else:
+            return "NO"
 
     def click(self):
         self.__contaclick += 1
-        if self.__accesa:
-            return False
-        else:
-            return True
+        if self.__accesa and self.__stato:              # se la lampadina è accesa e lo stato è buono, la spengo
+            self.__accesa = False
+        elif not self.__accesa and self.__stato:        # se la lampadina è spenta e lo stato è buono, la accendo
+            self.__accesa = True
+        elif not self.__stato:                          # se la lampadina è rotta, è sempre spenta
+            self.__accesa = False
 
     def controllaClick(self):
-        if self.__contaclick >= self.__clickmax:
-            return False
+        if self.__contaclick >= self.__clickmax:        #controllo i click effettuati per regolare lo stato
+            self.__stato = False
         else:
-            return True
-
-
+            self.__stato = True
