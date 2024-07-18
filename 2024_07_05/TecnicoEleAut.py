@@ -21,11 +21,11 @@ class TecnicoEleAut(Personale):
     def setInterno(self, interno):
         self.__interno = interno
 
-    def getCosto(self, ore):
+    def getCosto(self, anno):
         if self.__interno:
-            return self.costo * ore + (2024 - self.__annoAssunzione)
+            return self.costo * self.__oreLavorate + (anno - self.getAnnoAssunzione())
         else:
-            return self.costo * ore
+            return self.costo * self.__oreLavorate
 
     def __str__(self):
         return super().__str__()+f"Ore lavorate: {self.__oreLavorate}\nInterno: {self.__interno}"

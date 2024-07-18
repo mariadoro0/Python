@@ -8,7 +8,7 @@ from inputDati import input_gen, input_range, input_str
 
 
 def menu():
-    strmenu= """
+    strmenu = """
     =====MENU PROGETTO====
     1. Aggiungi persona.
     2. Elimina persona.
@@ -18,67 +18,41 @@ def menu():
     6. Stampa il costo totale del progetto.
     0. Esci dal programma.
     Scelta:"""
-    scelta=input(strmenu)
+    scelta = input(strmenu)
     return scelta
 
-
-class Persona:
-    pass
-
-
-def creaDirigente():
+def creaPersonale(type):
     codice = input("Inserire il codice: ")
     nome = input_gen("Inserire il nome:", str)
     cognome = input_gen("Inserire il cognome:", str)
-    annoAssunzione = input_gen("Inserire l'anno di assunzione:", str)
+    annoAssunzione = input_gen("Inserire l'anno di assunzione:", int)
     oreLavorate = input_gen("Inserire le ore lavorate:", int)
-    return Dirigente(codice, cognome, nome, annoAssunzione, oreLavorate)
-
-def creaFunzionarioSenior():
-    codice = input("Inserire il codice: ")
-    nome = input_gen("Inserire il nome:", str)
-    cognome = input_gen("Inserire il cognome:", str)
-    annoAssunzione = input_gen("Inserire l'anno di assunzione:", str)
-    oreLavorate = input_gen("Inserire le ore lavorate:", int)
-    return FunzionarioSenior(codice, cognome, nome, annoAssunzione, oreLavorate)
-
-def creaFunzionarioJunior():
-    codice = input("Inserire il codice: ")
-    nome = input_gen("Inserire il nome:", str)
-    cognome = input_gen("Inserire il cognome:", str)
-    annoAssunzione = input_gen("Inserire l'anno di assunzione:", str)
-    oreLavorate = input_gen("Inserire le ore lavorate:", int)
-    return FunzionarioJunior(codice, cognome, nome, annoAssunzione, oreLavorate)
-
-def creaTecnicoEleAut():
-    codice = input("Inserire il codice: ")
-    nome = input_gen("Inserire il nome:", str)
-    cognome = input_gen("Inserire il cognome:", str)
-    annoAssunzione = input_gen("Inserire l'anno di assunzione:", str)
-    oreLavorate = input_gen("Inserire le ore lavorate:", int)
-    interno = input_str("Inserire se il tecnico è interno o no: [S]ì o [N]o. ", str, 'S', 'N')
-    if interno == 'S':
-        interno = True
-    else:
-        interno = False
-    return TecnicoEleAut(codice, cognome, nome, annoAssunzione, oreLavorate, interno)
-
-def creaTecnicoInfTel():
-    codice = input("Inserire il codice: ")
-    nome = input_gen("Inserire il nome:", str)
-    cognome = input_gen("Inserire il cognome:", str)
-    annoAssunzione = input_gen("Inserire l'anno di assunzione:", str)
-    oreLavorate = input_gen("Inserire le ore lavorate:", int)
-    interno = input_str("Inserire se il tecnico è interno o no: [S]ì o [N]o. ", str, 'S', 'N')
-    if interno == 'S':
-        interno = True
-    else:
-        interno = False
-    return TecnicoInfTel(codice, cognome, nome, annoAssunzione, oreLavorate, interno)
+    match type:
+        case 1:
+            p = Dirigente(codice, cognome, nome, annoAssunzione, oreLavorate)
+        case 2:
+            p = FunzionarioSenior(codice, cognome, nome, annoAssunzione, oreLavorate)
+        case 3:
+            p = FunzionarioJunior(codice, cognome, nome, annoAssunzione, oreLavorate)
+        case 4:
+            interno = input_str("Inserire se il tecnico è interno o no: [S]ì o [N]o. ", str, 'S', 'N')
+            if interno == 'S':
+                interno = True
+            else:
+                interno = False
+            p = TecnicoEleAut(codice, cognome, nome, annoAssunzione, oreLavorate, interno)
+        case 5:
+            interno = input_str("Inserire se il tecnico è interno o no: [S]ì o [N]o. ", str, 'S', 'N')
+            if interno == 'S':
+                interno = True
+            else:
+                interno = False
+            p = TecnicoInfTel(codice, cognome, nome, annoAssunzione, oreLavorate, interno)
+    return p
 
 
 def scegliTipo():
-    strtype="""
+    strtype = """
     Inserire il tipo di dipendente da aggiungere:
     1. Dirigente
     2. Funzionario Senior
@@ -89,21 +63,6 @@ def scegliTipo():
     print(strtype)
     type = input_range("Inserire il tipo dipendente da aggiungere:", int, 1, 5)
     return type
-
-def newPersona():
-    tipo = scegliTipo()
-    match tipo:
-        case 1:
-            persona = creaDirigente()
-        case 2:
-            persona = creaFunzionarioSenior()
-        case 3:
-            persona = creaFunzionarioJunior()
-        case 4:
-            persona = creaTecnicoEleAut()
-        case 5:
-            persona = creaTecnicoInfTel()
-    return persona
 
 
 def main():
@@ -118,10 +77,10 @@ def main():
         scelta = menu()
         match scelta:
             case '1':
-                persona = newPersona()
+                persona = creaPersonale(scegliTipo())
                 elenco.aggiungiPersona(persona)
             case '2':
-                nome=input_gen("Inserire il nome: ", str)
+                nome = input_gen("Inserire il nome: ", str)
                 check = elenco.eliminaPersona(nome)
                 if check:
                     print("Persona eliminata correttamente.")
@@ -139,12 +98,12 @@ def main():
                 strtot = elenco.elencoPersone()
                 print(strtot)
             case '5':
-                print("Sono presenti "+str(elenco.getTotPersone())+" persone in elenco.")
+                print("Sono presenti " + str(elenco.getTotPersone()) + " persone in elenco.")
             case '6':
-                print("Costo totale del progetto: "+str(elenco.costiProgetto(2024))+" euro.")
+                anno = input_gen("Inserire l'anno del progetto: ", int)
+                print("Costo totale del progetto: " + str(elenco.costiProgetto(anno)) + " euro.")
             case '0':
                 break
 
+
 main()
-
-
